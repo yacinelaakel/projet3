@@ -1,0 +1,4 @@
+services:
+#    ylaakel_billeterie.example:
+#        class: ylaakel\BilleterieBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
