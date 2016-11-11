@@ -1,3 +1,3 @@
 ylaakel_billeterie_homepage:
     path:     /
-    defaults: { _controller: ylaakelBilleterieBundle:Default:index }
+    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:index }

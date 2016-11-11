@@ -4,10 +4,10 @@ namespace ylaakel\BilleterieBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class BilleterieController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('ylaakelBilleterieBundle:Default:index.html.twig');
+        return $this->render('ylaakelBilleterieBundle:Billeterie:index.html.twig');
     }
 }
