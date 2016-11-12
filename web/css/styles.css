@@ -61,7 +61,26 @@ h1 {
 	font-size: 30px;
 }
 
+/* Page contact */
 
+#contactSubmit {
+	display: block;
+	margin: auto;
+	font-size: 25px;
+	margin-top: 50px;
+}
+
+#contactMessage {
+	margin-top: 40px;
+}
+
+#contactMessage > textarea {
+	height: 170px;
+}
+
+.help-block {
+	color: #a94442;
+}
 
 /*Footer*/
 footer {

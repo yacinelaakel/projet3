@@ -1,0 +1,50 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}Contact - {{ parent() }} {% endblock %}
+
+{% block body %}
+	
+	<h1>Formulaire de contact</h1>
+	<hr>
+
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="alert alert-success">
+	    	<p>{{ message }}</p>
+	    </div>
+	{% endfor %}
+
+	{# Formulaire de contact ici #}
+	<div class="well well-lg">
+	<form action="{{ path('ylaakel_billeterie_contact') }}" method="post">
+    	{{ form_errors(form) }}
+
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				{{ form_label(form.name, "Votre nom :") }}
+		        {{ form_widget(form.name) }}
+		        {{ form_errors(form.name) }}
+			</div>
+			<div class="col-sm-12 col-md-6">
+		        {{ form_label(form.email, "Votre e-mail :") }}
+		        {{ form_widget(form.email) }}
+		        {{ form_errors(form.email) }}
+	    	</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="contactMessage">
+		        {{ form_label(form.message, "Votre message :") }}
+		        {{ form_widget(form.message) }}
+		        {{ form_errors(form.message) }}
+		    	</div>
+	    	</div>
+		</div>
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="Envoyer" id="contactSubmit" class="btn btn-success" />
+    </form>
+</div>
+
+{% endblock %}

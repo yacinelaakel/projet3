@@ -1,3 +1,7 @@
 ylaakel_billeterie_homepage:
     path:     /
     defaults: { _controller: ylaakelBilleterieBundle:Billeterie:index }
+
+ylaakel_billeterie_contact: 
+    path: /contact
+    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:contact }
