@@ -42,7 +42,7 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="message", type="text")
-     * @Assert\Length(min=10, minMessage="Le message doit faire au moins {{ limit }} caractères.", max=300, maxMessage="Le message doit faire moins de {{ limit }} caractères.")
+     * @Assert\Length(min=10, minMessage="Le message doit faire au moins {{ limit }} caractères.", max=1000, maxMessage="Le message doit faire moins de {{ limit }} caractères.")
      */
     private $message;
 
