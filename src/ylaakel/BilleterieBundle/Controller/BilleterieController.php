@@ -8,7 +8,8 @@ use ylaakel\BilleterieBundle\Form\ContactType;
 use ylaakel\BilleterieBundle\Entity\Contact;
 use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use ylaakel\BilleterieBundle\Entity\InfoBillet;
+use ylaakel\BilleterieBundle\Form\InfoBilletType;
 
 
 class BilleterieController extends Controller
@@ -70,6 +71,17 @@ class BilleterieController extends Controller
         //Pas besoin de tester si l'objet' est null puisqu'il a été crée dans l'action d'avant
         $commande = $repository->findOneBy(array('numCommande' => $numCommande));
 
-        return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande));
+        //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de formulaire
+        for ($i = 1; $i <= $commande->getNbrBillet(); $i++) {
+            $infoBillet[$i] = new InfoBillet();
+            $forms[] = $this->container
+                            ->get('form.factory')
+                            ->createNamedBuilder('form'.$i, InfoBilletType::class, $infoBillet[$i])
+                            ->getForm()
+                            ->createView();
+            $infoBillet[$i]->setCommande($commande);
+        }
+
+        return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande, 'forms' => $forms));
     }
 }
