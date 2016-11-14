@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ylaakel\BilleterieBundle\Form\ContactType;
 use ylaakel\BilleterieBundle\Entity\Contact;
-use ylaakel\BilleterieBundle\Entity\Choix;
-use ylaakel\BilleterieBundle\Form\ChoixType;
+use ylaakel\BilleterieBundle\Entity\Commande;
+use ylaakel\BilleterieBundle\Form\CommandeType;
 
 
 class BilleterieController extends Controller
@@ -23,8 +23,8 @@ class BilleterieController extends Controller
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-    		$name = $form->get('name')->getData();
-    		$email = $form->get('email')->getData();
+    		$name = $contact->getName();
+    		$email = $contact->getEmail();
 
     		//Envoi du mail ici
     		$message = \Swift_Message::newInstance()
@@ -43,14 +43,19 @@ class BilleterieController extends Controller
     	return $this->render('ylaakelBilleterieBundle:Billeterie:contact.html.twig', array('form' => $form->createView()));
     }
 
-    public function choixAction(Request $request) {
-        $choix = new Choix();
-        $form = $this->createForm(ChoixType::class, $choix);
+    public function commandeAction(Request $request) {
+        $commande = new Commande();
+        $form = $this->createForm(CommandeType::class, $commande);
 
-        // if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        //     // if(la date récupéré s'avère avoir + de 1000 ventes) {
+        //     //     $request->getSession()->getFlashBag()->add('notice', 'Désolé il n'y a plus de place pour la date choisie.');
+        //     //     return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
+        //     // }
+            // $commande->setNumCommande('aze' . strval($commande->getId()) . 'rty');
+            // return $this->redirectToRoute('ylaakel_billeterie_information_billet', array('commande' => $commande));      
+        }
 
-        // }
-
-        return $this->render('ylaakelBilleterieBundle:Billeterie:choixBillet.html.twig', array('form' => $form->createView()));
+        return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
     }
 }

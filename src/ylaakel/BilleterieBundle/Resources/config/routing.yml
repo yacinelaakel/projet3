@@ -6,7 +6,7 @@ ylaakel_billeterie_contact:
     path: /contact
     defaults: { _controller: ylaakelBilleterieBundle:Billeterie:contact }
 
-ylaakel_billeterie_choix_billet:
-    path: /choix-billet
-    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:choix }
+ylaakel_billeterie_commande_billet:
+    path: /commande-billet
+    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:commande }
 
