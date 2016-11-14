@@ -10,3 +10,6 @@ ylaakel_billeterie_commande_billet:
     path: /commande-billet
     defaults: { _controller: ylaakelBilleterieBundle:Billeterie:commande }
 
+ylaakel_billeterie_information_billet:
+    path: /information-billet-{numCommande}
+    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:info }

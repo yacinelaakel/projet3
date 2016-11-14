@@ -1,0 +1,14 @@
+{% extends "::layout.html.twig" %}
+
+
+{% block title %} Info - {{ parent() }} {% endblock %}
+
+{% block body %}
+	
+	<h1>Informations sur les billets</h1>
+	<hr>
+	{{ commande.laDate|date() }}
+	{{ commande.typeBillet }}
+	{{ commande.nbrBillet }}
+	{{ commande.numCommande }}
+{% endblock %}

@@ -8,6 +8,7 @@ use ylaakel\BilleterieBundle\Form\ContactType;
 use ylaakel\BilleterieBundle\Entity\Contact;
 use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class BilleterieController extends Controller
@@ -52,10 +53,23 @@ class BilleterieController extends Controller
         //     //     $request->getSession()->getFlashBag()->add('notice', 'Désolé il n'y a plus de place pour la date choisie.');
         //     //     return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
         //     // }
-            // $commande->setNumCommande('aze' . strval($commande->getId()) . 'rty');
-            // return $this->redirectToRoute('ylaakel_billeterie_information_billet', array('commande' => $commande));      
+            //génère un code
+            $commande->setNumCommande(rand(1,10000000) . 'aze' . rand(1, 10000000) . 'rty');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commande);
+            $em->flush();
+
+            return $this->redirectToRoute('ylaakel_billeterie_information_billet', array('numCommande' => $commande->getNumCommande()));      
         }
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
+    }
+
+    public function infoAction(Request $request, $numCommande) {
+        $repository = $this->getDoctrine()->getManager()->getRepository('ylaakelBilleterieBundle:Commande');
+        //Pas besoin de tester si l'objet' est null puisqu'il a été crée dans l'action d'avant
+        $commande = $repository->findOneBy(array('numCommande' => $numCommande));
+
+        return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande));
     }
 }
