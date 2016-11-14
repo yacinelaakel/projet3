@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ylaakel\BilleterieBundle\Form\ContactType;
 use ylaakel\BilleterieBundle\Entity\Contact;
+use ylaakel\BilleterieBundle\Entity\Choix;
+use ylaakel\BilleterieBundle\Form\ChoixType;
+
 
 class BilleterieController extends Controller
 {
@@ -38,5 +41,16 @@ class BilleterieController extends Controller
 
 
     	return $this->render('ylaakelBilleterieBundle:Billeterie:contact.html.twig', array('form' => $form->createView()));
+    }
+
+    public function choixAction(Request $request) {
+        $choix = new Choix();
+        $form = $this->createForm(ChoixType::class, $choix);
+
+        // if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+        // }
+
+        return $this->render('ylaakelBilleterieBundle:Billeterie:choixBillet.html.twig', array('form' => $form->createView()));
     }
 }

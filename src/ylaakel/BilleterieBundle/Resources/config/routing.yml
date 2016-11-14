@@ -5,3 +5,8 @@ ylaakel_billeterie_homepage:
 ylaakel_billeterie_contact: 
     path: /contact
     defaults: { _controller: ylaakelBilleterieBundle:Billeterie:contact }
+
+ylaakel_billeterie_choix_billet:
+    path: /choix-billet
+    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:choix }
+

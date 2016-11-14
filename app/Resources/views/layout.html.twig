@@ -11,6 +11,7 @@
   	{% block stylesheets %}
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     	<link rel="stylesheet" href="../css/styles.css">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	{% endblock %}
 </head>
 
@@ -41,21 +42,18 @@
 		</div>
 	</header>
 
-	<div class="row">
+  {% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  {% endblock %}
+
+	<div class="row" id="row2">
 		<div class="container">
 			{% block body %}
 			{% endblock %}
-		</div>
+	  </div>
 	</div>
-
-    <footer>
-    	<span>Mentions légales</span>
-    </footer>
-
-  	{% block javascripts %}
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  	{% endblock %}
 
 </body>
 </html>
