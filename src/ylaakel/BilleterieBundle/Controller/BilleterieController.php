@@ -9,7 +9,6 @@ use ylaakel\BilleterieBundle\Entity\Contact;
 use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeType;
 use ylaakel\BilleterieBundle\Entity\InfoBillet;
-use ylaakel\BilleterieBundle\Form\InfoBilletType;
 
 
 class BilleterieController extends Controller
@@ -50,12 +49,21 @@ class BilleterieController extends Controller
         $form = $this->createForm(CommandeType::class, $commande);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        //     // if(la date récupéré s'avère avoir + de 1000 ventes) {
-        //     //     $request->getSession()->getFlashBag()->add('notice', 'Désolé il n'y a plus de place pour la date choisie.');
-        //     //     return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
-        //     // }
+            //On récupère toutes les commandes à la date choisie par l'utilisateur
+            $commandesDate = $this->getDoctrine()->getManager()
+                                  ->getRepository('ylaakelBilleterieBundle:Commande')->commandesDate($commande->getLaDate());
+            $allBillets = 0;
+            //On compte le nombre de billets vendu à cette date
+            foreach ($commandesDate as $uneCommande) {
+                $allBillets += count($uneCommande->getInfoBillets());
+            }
+            //il y a + de 1000 billets vendus déjà, ou alors la personne souhaite commander + de 1000 billets
+            if($allBillets > 10 || $commande->getNbrBillet() > 10) {
+                $request->getSession()->getFlashBag()->add('notice', "Désolé il n'y a plus de place pour la date choisie.");
+                return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
+            }
             //génère un code
-            $commande->setNumCommande(rand(1,10000000) . 'aze' . rand(1, 10000000) . 'rty');
+            $commande->setNumCommande(rand(1,10000) . 'aze' . rand(1, 10000) . 'rty');
             $em = $this->getDoctrine()->getManager();
             $em->persist($commande);
             $em->flush();
@@ -71,14 +79,13 @@ class BilleterieController extends Controller
         //Pas besoin de tester si l'objet' est null puisqu'il a été crée dans l'action précédente
         //On récupère l'objet avec son numéro de commande plutôt que son id
         $commande = $repository->findOneBy(array('numCommande' => $numCommande));
-
         //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de formulaire
-        for ($i=1; $i <= $commande->getNbrBillet(); $i++) { 
+        $nbrBillet = $commande->getNbrBillet();
+        for ($i=1; $i <= $nbrBillet; $i++) { 
             $infoBillet[$i] = new InfoBillet();
             //On ajoute chaque billet à la collection de la commande en cours
             $commande->addInfoBillet($infoBillet[$i]);
         }
-
         $form = $this->createForm(CommandeType::class, $commande);
         //Il faut remettre les valeurs dans l'objet commande après la deuxième soumission de formulaire
         $tempDate = $commande->getLaDate();
@@ -89,10 +96,10 @@ class BilleterieController extends Controller
             $commande->setLaDate($tempDate);
             $commande->setTypeBillet($tempType);
             $commande->setNbrBillet($tempNbrBillet);
-            
+
             $em = $this->getDoctrine()->getManager();
-            foreach ($commande->getInfoBillets() as $unBillet) {
-                $em->persist($unBillet);
+            foreach ($commande->getInfoBillets() as $infoBillet) {
+                $em->persist($infoBillet);
             }
             $em->flush();
             // return $this->redirectToRoute('ylaakel_billeterie_paiement_billet');

@@ -1,6 +1,7 @@
 <?php
 
 namespace ylaakel\BilleterieBundle\Repository;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * CommandeRepository
@@ -10,4 +11,15 @@ namespace ylaakel\BilleterieBundle\Repository;
  */
 class CommandeRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function commandesDate($date) {
+		$qb = $this->createQueryBuilder('c')
+				   ->where('c.laDate = :date')
+    			   ->setParameter('date', $date);
+
+		$query = $qb->getQuery();
+
+ 		$results = $query->getResult();
+
+ 		return $results;
+	}
 }
