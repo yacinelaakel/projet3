@@ -3,6 +3,7 @@
 namespace ylaakel\BilleterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * InfoBillet
@@ -22,7 +23,7 @@ class InfoBillet
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ylaakel\BilleterieBundle\Entity\Commande")
+     * @ORM\ManyToOne(targetEntity="ylaakel\BilleterieBundle\Entity\Commande", inversedBy="infoBillets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $commande;
@@ -30,14 +31,16 @@ class InfoBillet
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\Length(min=3, minMessage="Le nom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le nom doit faire moins de {{ limit }} caractères.")
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="surname", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255)
+     * @Assert\Length(min=3, minMessage="Le prénom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le prénom doit faire moins de {{ limit }} caractères.")
      */
     private $prenom;
 
@@ -55,6 +58,11 @@ class InfoBillet
      */
     private $dateNaissance;
 
+    /**
+     * @ORM\Column(name="tarifReduit", type="boolean")
+     * @Assert\Type("bool")
+     */
+    private $tarifReduit;
 
     /**
      * Get id
@@ -160,5 +168,29 @@ class InfoBillet
     public function getPrenom()
     {
         return $this->prenom;
+    }
+
+    /**
+     * Set commande
+     *
+     * @param \ylaakel\BilleterieBundle\Entity\Commande $commande
+     *
+     * @return InfoBillet
+     */
+    public function setCommande(\ylaakel\BilleterieBundle\Entity\Commande $commande)
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * Get commande
+     *
+     * @return \ylaakel\BilleterieBundle\Entity\Commande
+     */
+    public function getCommande()
+    {
+        return $this->commande;
     }
 }

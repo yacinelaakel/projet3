@@ -25,7 +25,7 @@ class Commande
 
     /**
      * @ORM\OneToMany(targetEntity="ylaakel\BilleterieBundle\Entity\InfoBillet", mappedBy="commande")
-     *
+     * @Assert\Valid()
      */
     private $infoBillets;
 
@@ -34,6 +34,7 @@ class Commande
      * @var \DateTime
      *
      * @ORM\Column(name="laDate", type="datetimetz")
+     * @Assert\DateTime()
      */
     private $laDate;
 

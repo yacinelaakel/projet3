@@ -80,15 +80,24 @@ class BilleterieController extends Controller
         }
 
         $form = $this->createForm(CommandeType::class, $commande);
+        //Il faut remettre les valeurs dans l'objet commande après la deuxième soumission de formulaire
+        $tempDate = $commande->getLaDate();
+        $tempType = $commande->getTypeBillet();
+        $tempNbrBillet = $commande->getNbrBillet();
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
+            $commande->setLaDate($tempDate);
+            $commande->setTypeBillet($tempType);
+            $commande->setNbrBillet($tempNbrBillet);
+            
             $em = $this->getDoctrine()->getManager();
             foreach ($commande->getInfoBillets() as $unBillet) {
                 $em->persist($unBillet);
             }
             $em->flush();
             // return $this->redirectToRoute('ylaakel_billeterie_paiement_billet');
+            return $this->redirectToRoute('ylaakel_billeterie_contact');
+
         }
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande, 'form' => $form->createView()));

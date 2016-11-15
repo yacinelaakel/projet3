@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 
 
 class InfoBilletType extends AbstractType
@@ -30,7 +32,10 @@ class InfoBilletType extends AbstractType
                     'years' => range(date('Y'), date('Y') - 100),
                     'placeholder' => array('day' => 'Jour', 'month' => 'Mois', 'year' => 'Année'),
                     'input' => 'datetime',
-                    'format' => 'dd-MM-yyyy'));
+                    'format' => 'dd-MM-yyyy'))
+                ->add('tarifReduit', CheckboxType::class, array(
+                    'label' => 'Tarif réduit?',
+                    'required' => false));
     }
     
     /**

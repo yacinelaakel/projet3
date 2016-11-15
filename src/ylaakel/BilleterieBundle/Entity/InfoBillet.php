@@ -25,6 +25,7 @@ class InfoBillet
     /**
      * @ORM\ManyToOne(targetEntity="ylaakel\BilleterieBundle\Entity\Commande", inversedBy="infoBillets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $commande;
 
@@ -48,6 +49,7 @@ class InfoBillet
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=255)
+     * @Assert\Type("string")
      */
     private $pays;
 
@@ -55,9 +57,15 @@ class InfoBillet
      * @var \DateTime
      *
      * @ORM\Column(name="dateNaissance", type="datetimetz")
+     * @Assert\DateTime()
      */
     private $dateNaissance;
 
+    /**
+     * @ORM\Column(name="tarifReduit", type="boolean")
+     * @Assert\Type("bool")
+     */
+    private $tarifReduit;
 
     /**
      * Get id
@@ -187,5 +195,29 @@ class InfoBillet
     public function getCommande()
     {
         return $this->commande;
+    }
+
+    /**
+     * Set tarifReduit
+     *
+     * @param boolean $tarifReduit
+     *
+     * @return InfoBillet
+     */
+    public function setTarifReduit($tarifReduit)
+    {
+        $this->tarifReduit = $tarifReduit;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifReduit
+     *
+     * @return boolean
+     */
+    public function getTarifReduit()
+    {
+        return $this->tarifReduit;
     }
 }
