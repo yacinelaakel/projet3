@@ -58,7 +58,7 @@ class Commande
      * @var string
      * 
      * @ORM\Column(name="numCommande", type="string", length=255)
-     * @Assert\Length(min=3, max=15)
+     * @Assert\Length(min=3)
      */
     private $numCommande;
 
@@ -185,7 +185,7 @@ class Commande
     public function addInfoBillet(\ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet)
     {
         $this->infoBillets[] = $infoBillet;
-        
+        //On associe le billet à la commande
         $infoBillet->setCommande($this);
 
         return $this;
