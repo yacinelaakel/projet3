@@ -22,7 +22,7 @@ class InfoBillet
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ylaakel\BilleterieBundle\Entity\Commande")
+     * @ORM\ManyToOne(targetEntity="ylaakel\BilleterieBundle\Entity\Commande", inversedBy="infoBillets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $commande;

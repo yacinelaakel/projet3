@@ -14,7 +14,6 @@
 	    </div>
 	{% endfor %}
 
-	<div class="alert alert-info alert-sm"><strong>Info :</strong> Vous ne pouvez pas réserver de billet les dimanches, les jours fériés et les jours où plus de 1000 billets ont été vendus en tout pour ne pas dépasser la capacité du musée.Todo : gérer la désactivation du type "Journée" après 14h; Gérer la désactivation du jour au delà de 1000 ventes.</div>
 	{# Mon formulaire de selection des billets s'affichera ici #}
 	<form method="post">
 		<div class="row" style="margin-top:60px">
@@ -31,7 +30,7 @@
 			</div>
 		</div>
 		
-		{{ form_rest(form) }}
+		{{ form_widget(form._token) }}
 
 	    <input type="submit" value="Etape suivante" id="customSubmit" class="btn btn-success" />
     </form>

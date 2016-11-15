@@ -24,6 +24,13 @@ class Commande
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ylaakel\BilleterieBundle\Entity\InfoBillet", mappedBy="commande")
+     *
+     */
+    private $infoBillets;
+
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="laDate", type="datetimetz")
@@ -159,5 +166,48 @@ class Commande
     public function getNumCommande()
     {
         return $this->numCommande;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->infoBillets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add infoBillet
+     *
+     * @param \ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet
+     *
+     * @return Commande
+     */
+    public function addInfoBillet(\ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet)
+    {
+        $this->infoBillets[] = $infoBillet;
+        
+        $infoBillet->setCommande($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove InfoBillet
+     *
+     * @param \ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet
+     */
+    public function removeInfoBillet(\ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet)
+    {
+        $this->infoBillets->removeElement($infoBillet);
+    }
+
+    /**
+     * Get infoBillets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInfoBillets()
+    {
+        return $this->infoBillets;
     }
 }

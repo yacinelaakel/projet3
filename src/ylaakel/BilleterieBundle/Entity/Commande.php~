@@ -3,6 +3,8 @@
 namespace ylaakel\BilleterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Choix
@@ -22,6 +24,13 @@ class Commande
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ylaakel\BilleterieBundle\Entity\infoBillet", mappedBy="commande")
+     *
+     */
+    private $infoBillets;
+
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="laDate", type="datetimetz")
@@ -32,6 +41,7 @@ class Commande
      * @var bool
      *
      * @ORM\Column(name="typeBillet", type="boolean")
+     * @Assert\Type("bool")
      */
     private $typeBillet;
 
@@ -39,6 +49,7 @@ class Commande
      * @var int
      *
      * @ORM\Column(name="nbrBillet", type="integer")
+     * @Assert\Range(min=1, minMessage="Il doit y avoir au moins {{ limit }} billet.", max=3, maxMessage="Il doit y avoir au plus {{ limit }} billets.", invalidMessage="Nombre invalide.")
      */
     private $nbrBillet;
 
@@ -47,6 +58,7 @@ class Commande
      * @var string
      * 
      * @ORM\Column(name="numCommande", type="string", length=255)
+     * @Assert\Length(min=3, max=15)
      */
     private $numCommande;
 
@@ -131,5 +143,28 @@ class Commande
     {
         return $this->nbrBillet;
     }
-}
 
+    /**
+     * Set numCommande
+     *
+     * @param string $numCommande
+     *
+     * @return Commande
+     */
+    public function setNumCommande($numCommande)
+    {
+        $this->numCommande = $numCommande;
+
+        return $this;
+    }
+
+    /**
+     * Get numCommande
+     *
+     * @return string
+     */
+    public function getNumCommande()
+    {
+        return $this->numCommande;
+    }
+}
