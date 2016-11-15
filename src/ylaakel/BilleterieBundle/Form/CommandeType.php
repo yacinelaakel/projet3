@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 
 class CommandeType extends AbstractType
@@ -30,9 +31,8 @@ class CommandeType extends AbstractType
                     'multiple' => false,
                     'required' => true
                     ))
-                ->add('nbrBillet', ChoiceType::class, array(
+                ->add('nbrBillet', IntegerType::class, array(
                     'label' => 'Nombre de billet(s)',
-                    'choices' => array('1' => 1, '2' => 2, '3' => 3)
                     ))
                 ->add('infoBillets', CollectionType::class, array(
                     'entry_type' => InfoBilletType::class

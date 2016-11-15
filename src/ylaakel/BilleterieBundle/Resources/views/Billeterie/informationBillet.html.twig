@@ -7,10 +7,9 @@
 	
 	<h1>Informations sur les billets</h1>
 	<hr>
-	{{ commande.laDate|date() }}
-	{{ commande.typeBillet }}
-	{{ commande.nbrBillet }}
-	{{ commande.numCommande }}
+	<div class="alert alert-info">
+		Date de réservation choisie : le <strong>{{ commande.laDate|date('d/m/Y') }}</strong>
+	</div>
 
 	<form method="post">
 		<div class="row">

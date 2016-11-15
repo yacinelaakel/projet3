@@ -69,10 +69,11 @@ class BilleterieController extends Controller
     public function infoAction(Request $request, $numCommande) {
         $repository = $this->getDoctrine()->getManager()->getRepository('ylaakelBilleterieBundle:Commande');
         //Pas besoin de tester si l'objet' est null puisqu'il a été crée dans l'action précédente
+        //On récupère l'objet avec son numéro de commande plutôt que son id
         $commande = $repository->findOneBy(array('numCommande' => $numCommande));
 
         //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de formulaire
-        for ($i=1; $i <= $commande->getNbrBillet() ; $i++) { 
+        for ($i=1; $i <= $commande->getNbrBillet(); $i++) { 
             $infoBillet[$i] = new InfoBillet();
             //On ajoute chaque billet à la collection de la commande en cours
             $commande->addInfoBillet($infoBillet[$i]);
@@ -87,9 +88,16 @@ class BilleterieController extends Controller
                 $em->persist($unBillet);
             }
             $em->flush();
-            return $this->redirectToRoute('ylaakel_billeterie_contact');
+            // return $this->redirectToRoute('ylaakel_billeterie_paiement_billet');
         }
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande, 'form' => $form->createView()));
     }
+
+
+    // public function paiementAction(Request $request, $numCommande) {
+    //     $repository = $this->getDoctrine()->getManager()->getRepository('ylaakelBilleterieBundle:Commande');
+    //     //Ici mon objet commande possède les informations sur la commande ET la collection des billets 
+    //     $commande = $repository->findOneBy(array('numCommande' => $numCommande));
+    // }
 }

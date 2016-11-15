@@ -49,7 +49,7 @@ class Commande
      * @var int
      *
      * @ORM\Column(name="nbrBillet", type="integer")
-     * @Assert\Range(min=1, minMessage="Il doit y avoir au moins {{ limit }} billet.", max=3, maxMessage="Il doit y avoir au plus {{ limit }} billets.", invalidMessage="Nombre invalide.")
+     * @Assert\Range(min=1, minMessage="Il doit y avoir au moins {{ limit }} billet.", max=1000, maxMessage="Il doit y avoir au plus {{ limit }} billets.", invalidMessage="Nombre invalide.")
      */
     private $nbrBillet;
 

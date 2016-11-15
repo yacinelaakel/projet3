@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 
 class InfoBilletType extends AbstractType
@@ -18,10 +19,16 @@ class InfoBilletType extends AbstractType
     {
         $builder->add('nom', TextType::class)
                 ->add('prenom', TextType::class)
-                ->add('pays', TextType::class)
+                //Liste des pays
+                ->add('pays', CountryType::class, array(
+                    'placeholder' => '',
+                     ))
                 ->add('dateNaissance', DateType::class, array(
                     'label' => 'Date de naissance',
-                    'widget' => 'single_text',
+                    'widget' => 'choice',
+                    //Restriction des années sur la date de naissance
+                    'years' => range(date('Y'), date('Y') - 100),
+                    'placeholder' => array('day' => 'Jour', 'month' => 'Mois', 'year' => 'Année'),
                     'input' => 'datetime',
                     'format' => 'dd-MM-yyyy'));
     }

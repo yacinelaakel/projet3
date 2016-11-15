@@ -3,6 +3,7 @@
 namespace ylaakel\BilleterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * InfoBillet
@@ -30,14 +31,16 @@ class InfoBillet
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\Length(min=3, minMessage="Le nom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le nom doit faire moins de {{ limit }} caractères.")
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="surname", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255)
+     * @Assert\Length(min=3, minMessage="Le prénom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le prénom doit faire moins de {{ limit }} caractères.")
      */
     private $prenom;
 
