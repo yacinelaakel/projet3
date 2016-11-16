@@ -104,9 +104,10 @@ class BilleterieController extends Controller
 
     public function paiementAction(Request $request, Commande $commande) {
         //api key pk_live_mEqbqgEwH5nndIdRrqC4Aodl
+        $em = $this->getDoctrine()->getManager();
         //calcul du tarif ici
         $prixTotal = 0;
-        $tabDiff = array();
+        $tabPrix = array();
         foreach($commande->getInfoBillets() as $infoBillet) {
             $currentDate = date_create();
             $dateInfoBillet = $infoBillet->getDateNaissance();
@@ -115,24 +116,29 @@ class BilleterieController extends Controller
             //Si la personne dispose du tarif réduit
             if($infoBillet->getTarifReduit()) {
                 $prixTotal += 10;
+                $infoBillet->setPrix(10);
             }
             else {
                 if($diff < 4) {
-                    $prixTotal += 0;    
+                    $prixTotal += 0;  
+                    $infoBillet->setPrix(0);  
                 }
                 elseif ($diff < 12) {
                     $prixTotal += 8;
+                    $infoBillet->setPrix(8);  
                 }
                 elseif ($diff < 60) {
                     $prixTotal += 16;
+                    $infoBillet->setPrix(16);  
                 }
                 else {
-                    $prixTotal += 8;
+                    $prixTotal += 12;
+                    $infoBillet->setPrix(12);  
                 }
             }
-            array_push($tabDiff, $diff);
+            $em->flush();
         }
 
-        return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commande, 'prixTotal' => $prixTotal, 'tabDiff' => $tabDiff));
+        return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commande, 'prixTotal' => $prixTotal, 'allBillets' => $commande->getInfoBillets()));
     }
 }

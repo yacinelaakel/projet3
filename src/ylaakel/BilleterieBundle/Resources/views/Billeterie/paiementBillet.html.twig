@@ -22,8 +22,8 @@
 				<strong>Prix des billets : </strong>
 				<br>
 				<ul>
-					{% for diff in tabDiff %}
-						<li>Billet n°{{loop.index}} : <strong>{{ diff }}</strong>
+					{% for infoBillet in allBillets %}
+						<li>Billet n°{{loop.index}} : <strong>{{ infoBillet.prix }}€</strong>
 					{% endfor %}
 				</ul>
 				<hr>

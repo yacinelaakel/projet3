@@ -67,6 +67,12 @@ class InfoBillet
      */
     private $tarifReduit;
 
+    /**
+     *
+     * @ORM\Column(name="prix", type="integer", nullable=true)
+     * @Assert\Range(min=0)
+     */
+    private $prix;
 
     /**
      * Get id
@@ -220,5 +226,29 @@ class InfoBillet
     public function getTarifReduit()
     {
         return $this->tarifReduit;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     *
+     * @return InfoBillet
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->prix;
     }
 }
