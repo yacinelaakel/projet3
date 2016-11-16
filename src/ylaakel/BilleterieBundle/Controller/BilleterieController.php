@@ -74,11 +74,7 @@ class BilleterieController extends Controller
         return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
     }
 
-    public function infoAction(Request $request, $numCommande) {
-        $repository = $this->getDoctrine()->getManager()->getRepository('ylaakelBilleterieBundle:Commande');
-        //Pas besoin de tester si l'objet' est null puisqu'il a été crée dans l'action précédente
-        //On récupère l'objet avec son numéro de commande plutôt que son id
-        $commande = $repository->findOneBy(array('numCommande' => $numCommande));
+    public function infoAction(Request $request, Commande $commande) {
         //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de formulaire
         $nbrBillet = $commande->getNbrBillet();
         for ($i=1; $i <= $nbrBillet; $i++) { 
