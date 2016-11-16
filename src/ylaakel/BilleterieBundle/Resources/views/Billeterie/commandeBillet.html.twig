@@ -87,8 +87,10 @@
       				if(currentDay.getDate() + "-" + (currentDay.getMonth() +1) + "-" + currentDay.getFullYear() == dateText) {
       					//Si 14h est passé
       					if(currentDay.getHours() >= 14 && (currentDay.getMinutes() > 0 || currentDay.getSeconds() > 0)) {
-      						//Bouton radio désactivé
-					        $(':radio[value="1"]').attr('disabled', true).parent().css('color', 'grey').css('font-style', 'italic');
+      						//Bouton radio journée désactivé
+					        $(':radio[value="1"]').attr('disabled', true).prop('checked', false).parent().css('color', 'grey').css('font-style', 'italic');
+					        //Bouton radio demi-journée activé obligatoirement
+					        $(':radio[value="0"]').prop('checked', true);
       					}
       				}
       			}
