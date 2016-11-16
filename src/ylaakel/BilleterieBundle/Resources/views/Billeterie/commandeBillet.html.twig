@@ -79,7 +79,19 @@
       			//interdiction de sélectionner les jours 1 an après la date courante
       			maxDate: '+1Y',
       			//jours spécifique interdit
-      			beforeShowDay: joursInterdits
+      			beforeShowDay: joursInterdits,
+
+      			onSelect: function(dateText) {
+      				var currentDay = new Date();
+      				//Si le jour sélectionné (dateText) est égal au jour courant
+      				if(currentDay.getDate() + "-" + (currentDay.getMonth() +1) + "-" + currentDay.getFullYear() == dateText) {
+      					//Si 14h est passé
+      					if(currentDay.getHours() >= 14 && (currentDay.getMinutes() > 0 || currentDay.getSeconds() > 0)) {
+      						//Bouton radio désactivé
+					        $(':radio[value="1"]').attr('disabled', true).parent().css('color', 'grey').css('font-style', 'italic');
+      					}
+      				}
+      			}
 			});
 
 			$('input, select').css('font-weight', 'bold');
