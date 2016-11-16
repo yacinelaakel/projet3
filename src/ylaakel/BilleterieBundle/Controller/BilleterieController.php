@@ -141,4 +141,21 @@ class BilleterieController extends Controller
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commande, 'prixTotal' => $prixTotal, 'allBillets' => $commande->getInfoBillets()));
     }
+
+    public function confirmationAction(Request $request, Commande $commande) {
+        $stripeToken = $request->get('stripeToken');
+
+        //Envoi du mail final
+        if(isset($stripeToken)) {
+            $email = $commande->getEmail();
+            $message = \Swift_Message::newInstance()
+            ->setSubject("Confirmation d'achat")
+            ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
+            ->setTo($email);
+            $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.txt.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets())));            
+            $this->get('mailer')->send($message);
+
+            return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');
+        }
+    }
 }

@@ -1,0 +1,23 @@
+Billeterie du Louvre - 
+
+Bonjour et merci d'avoir commandé vos billets.
+
+Retrouvez ci-dessous les informations sur votre commande :
+
+- Date de réservation choisie : le {{ commande.laDate|date('d/m/Y') }}
+- Type de billet : {% if commande.typeBillet == true %}Journée {% else %}Demi-journée {% endif %}
+- Nombre de billet(s) : {{ commande.nbrBillet }}
+
+----------------------------------------------------------------------
+
+Prix des billets : 
+{% set prixTotal = 0 %}
+{% for infoBillet in allBillets %}
+Billet n°{{loop.index}} : "{{ infoBillet.prenom }} {{ infoBillet.nom }}" : {{ infoBillet.prix }}€
+{% set prixTotal = prixTotal + infoBillet.prix %}
+{% endfor %}
+
+Prix total : {{ prixTotal }}€
+
+Numéro de commande : {{ commande.numCommande }}
+Numéro de réservation :  {{ stripeToken }}

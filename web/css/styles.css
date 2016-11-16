@@ -67,7 +67,7 @@ h1 {
 
 /* Page contact */
 
-#customSubmit {
+button[type="submit"], input[type="submit"] {
 	display: block;
 	margin: auto;
 	font-size: 25px;
@@ -88,6 +88,7 @@ h1 {
 }
 
 /*Footer*/
+
 footer {
    position:static;
    left:0px;
@@ -100,4 +101,17 @@ footer {
 
 footer > * {
 	padding-left: 80px;
+}
+
+/*Stripe*/
+
+.stripe-button-el {
+	width: 200px;
+	height: 70px;
+}
+
+.stripe-button-el span {
+	padding: 20px !important;
+	height: 70px !important;
+	font-size: 23px !important;
 }

@@ -23,7 +23,7 @@
 				<br>
 				<ul>
 					{% for infoBillet in allBillets %}
-						<li>Billet n°{{loop.index}} : <strong>{{ infoBillet.prix }}€</strong>
+						<li>Billet de "{{ infoBillet.prenom }} {{ infoBillet.nom }}" : <strong>{{ infoBillet.prix }}€</strong>
 					{% endfor %}
 				</ul>
 				<hr>
@@ -32,25 +32,23 @@
 			</div>
 		</div>
 	</div>
-{# 	<div class="well">
-		{% for infoBillet in commande.infoBillets %}
-			{{ infoBillet.dateNaissance|date('d/m/Y') }}
-			<br>
-		{% endfor %}
-	</div> #}
-	<form action="/your-server-side-code" method="POST">
-	  <script
-	    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-	    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-	    data-amount="999"
-	    data-name="Billeterie du Louvre"
-	    data-description="Paiement"
-	    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-	    data-locale="auto"
-	    data-currency="EUR"
-	    data-email="{{ commande.email }}"
-	    data-label="Paiement final"
-	    data-allow-remember-me="false">
-	  </script>
-	</form>
+	
+	<div class="row">	
+		<form action="{{ path('ylaakel_billeterie_confirmation_billet', {'numCommande': commande.numCommande}) }}" method="POST" style="display:block; margin:auto; font-size:20px">
+		  <script
+		    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+		    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+		    data-amount="{{ prixTotal * 100}}"
+		    data-name="Billeterie du Louvre"
+		    data-description="Paiement"
+		    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+		    data-locale="auto"
+		    data-currency="EUR"
+		    data-email="{{ commande.email }}"
+		    data-label="Paiement final"
+		    data-allow-remember-me="false">
+		  </script>
+		</form>
+	</div>
+
 {% endblock %}

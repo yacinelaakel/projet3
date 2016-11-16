@@ -29,9 +29,7 @@ class InfoBilletType extends AbstractType
                     'label' => 'Date de naissance',
                     'widget' => 'choice',
                     //Restriction des années sur la date de naissance
-                    'years' => range(date('Y'), date('Y') - 100),
-                    'months' => range(1, date('m')),
-                    'days' => range(1, date('d')),
+                    'years' => range(date('Y') - 1, date('Y') - 100),
                     'placeholder' => array('day' => 'Jour', 'month' => 'Mois', 'year' => 'Année'),
                     'input' => 'datetime',
                     'format' => 'dd-MM-yyyy'))
