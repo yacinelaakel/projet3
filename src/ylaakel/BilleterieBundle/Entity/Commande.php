@@ -54,6 +54,14 @@ class Commande
      */
     private $nbrBillet;
 
+    /**
+     *
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Length(min=5, minMessage="L'e-mail doit faire au moins {{ limit }} caractères.", max=30, maxMessage="L'email doit faire moins de {{ limit }} caractères.")
+     */
+    private $email;
+
 
     /**
      * @var string
@@ -210,5 +218,29 @@ class Commande
     public function getInfoBillets()
     {
         return $this->infoBillets;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Commande
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

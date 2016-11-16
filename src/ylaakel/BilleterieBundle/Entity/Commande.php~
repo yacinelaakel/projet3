@@ -24,8 +24,8 @@ class Commande
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="ylaakel\BilleterieBundle\Entity\infoBillet", mappedBy="commande")
-     *
+     * @ORM\OneToMany(targetEntity="ylaakel\BilleterieBundle\Entity\InfoBillet", mappedBy="commande")
+     * @Assert\Valid()
      */
     private $infoBillets;
 
@@ -34,6 +34,7 @@ class Commande
      * @var \DateTime
      *
      * @ORM\Column(name="laDate", type="datetimetz")
+     * @Assert\DateTime()
      */
     private $laDate;
 
@@ -49,16 +50,24 @@ class Commande
      * @var int
      *
      * @ORM\Column(name="nbrBillet", type="integer")
-     * @Assert\Range(min=1, minMessage="Il doit y avoir au moins {{ limit }} billet.", max=3, maxMessage="Il doit y avoir au plus {{ limit }} billets.", invalidMessage="Nombre invalide.")
+     * @Assert\Range(min=1, minMessage="Il doit y avoir au moins {{ limit }} billet.", max=1000, maxMessage="Il doit y avoir au plus {{ limit }} billets.", invalidMessage="Nombre invalide.")
      */
     private $nbrBillet;
+
+    /**
+     *
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Length(min=5, minMessage="L'e-mail doit faire au moins {{ limit }} caractères.", max=30, maxMessage="L'email doit faire moins de {{ limit }} caractères.")
+     */
+    private $email;
 
 
     /**
      * @var string
      * 
      * @ORM\Column(name="numCommande", type="string", length=255)
-     * @Assert\Length(min=3, max=15)
+     * @Assert\Length(min=3)
      */
     private $numCommande;
 
@@ -166,5 +175,48 @@ class Commande
     public function getNumCommande()
     {
         return $this->numCommande;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->infoBillets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add infoBillet
+     *
+     * @param \ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet
+     *
+     * @return Commande
+     */
+    public function addInfoBillet(\ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet)
+    {
+        $this->infoBillets[] = $infoBillet;
+        //On associe le billet à la commande
+        $infoBillet->setCommande($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove InfoBillet
+     *
+     * @param \ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet
+     */
+    public function removeInfoBillet(\ylaakel\BilleterieBundle\Entity\InfoBillet $infoBillet)
+    {
+        $this->infoBillets->removeElement($infoBillet);
+    }
+
+    /**
+     * Get infoBillets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInfoBillets()
+    {
+        return $this->infoBillets;
     }
 }

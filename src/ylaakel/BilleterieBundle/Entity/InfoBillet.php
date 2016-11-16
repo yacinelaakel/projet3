@@ -67,6 +67,7 @@ class InfoBillet
      */
     private $tarifReduit;
 
+
     /**
      * Get id
      *

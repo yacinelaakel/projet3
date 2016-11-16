@@ -8,13 +8,13 @@
 	<h1>Informations sur les billets</h1>
 	<hr>
 	<div class="alert alert-info">
-		Date de réservation choisie : le <strong>{{ commande.laDate|date('d/m/Y') }}</strong>
+		<strong>À savoir :</strong> Si vous choisissez l'option "Tarif réduit" il faudra présenter un justificatif à l'entrée du musée
 	</div>
 
 	<form method="post">
 		<div class="row">
 			{% for infoBillet in form.infoBillets %}
-				<div class="col-md-4">
+				<div class="col-sm-12 col-md-4">
 	            	<div class="well">
 	            		Billet n°{{loop.index}}
 	            		<hr>
@@ -30,3 +30,4 @@
 	</form>	
 
 {% endblock %}
+

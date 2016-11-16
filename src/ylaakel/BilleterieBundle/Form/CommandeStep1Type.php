@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 
-class CommandeType extends AbstractType
+class CommandeStep1Type extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -34,8 +34,8 @@ class CommandeType extends AbstractType
                 ->add('nbrBillet', IntegerType::class, array(
                     'label' => 'Nombre de billet(s)',
                     ))
-                ->add('infoBillets', CollectionType::class, array(
-                    'entry_type' => InfoBilletType::class
+                ->add('email', EmailType::class, array(
+                    'label' => 'Votre e-mail',
                     ));
     }
     

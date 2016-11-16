@@ -1,0 +1,56 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Paiement - {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>Paiement de vos billets</h1>
+	<hr>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="well">
+				<strong>Récapitulatif de votre commande : </strong>
+				<hr>
+
+				<ul>
+					<li>Date de réservation choisie : le <strong>{{ commande.laDate|date('d/m/Y') }} </strong> <span class="glyphicon glyphicon-ok"></li>
+					<li>Type de billet : {% if commande.typeBillet == true %}<strong>Journée</strong> <span class="glyphicon glyphicon-ok">{% else %}<strong>Demi-journée</strong> <span class="glyphicon glyphicon-ok">{% endif %}</li>
+					<li>Nombre de billet(s) : <strong>{{ commande.nbrBillet }}</strong> <span class="glyphicon glyphicon-ok"></li>
+				</ul>
+				<hr>
+
+				<strong>Prix des billets : </strong>
+				<br>
+				<ul>
+					{% for diff in tabDiff %}
+						<li>Billet n°{{loop.index}} : <strong>{{ diff }}</strong>
+					{% endfor %}
+				</ul>
+				<hr>
+
+				<strong>Prix total : {{ prixTotal }}€</strong>
+			</div>
+		</div>
+	</div>
+{# 	<div class="well">
+		{% for infoBillet in commande.infoBillets %}
+			{{ infoBillet.dateNaissance|date('d/m/Y') }}
+			<br>
+		{% endfor %}
+	</div> #}
+	<form action="/your-server-side-code" method="POST">
+	  <script
+	    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+	    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+	    data-amount="999"
+	    data-name="Billeterie du Louvre"
+	    data-description="Paiement"
+	    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+	    data-locale="auto"
+	    data-currency="EUR"
+	    data-email="{{ commande.email }}"
+	    data-label="Paiement final"
+	    data-allow-remember-me="false">
+	  </script>
+	</form>
+{% endblock %}

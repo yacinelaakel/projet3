@@ -7,7 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use ylaakel\BilleterieBundle\Form\ContactType;
 use ylaakel\BilleterieBundle\Entity\Contact;
 use ylaakel\BilleterieBundle\Entity\Commande;
-use ylaakel\BilleterieBundle\Form\CommandeType;
+use ylaakel\BilleterieBundle\Form\CommandeStep1Type;
+use ylaakel\BilleterieBundle\Form\CommandeStep2Type;
 use ylaakel\BilleterieBundle\Entity\InfoBillet;
 
 
@@ -46,7 +47,8 @@ class BilleterieController extends Controller
 
     public function commandeAction(Request $request) {
         $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
+        //CommandeStep1Type formule tous les attributs de l'objet commande sauf la collection de billet
+        $form = $this->createForm(CommandeStep1Type::class, $commande);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             //On récupère toutes les commandes à la date choisie par l'utilisateur
@@ -82,34 +84,55 @@ class BilleterieController extends Controller
             //On ajoute chaque billet à la collection de la commande en cours
             $commande->addInfoBillet($infoBillet[$i]);
         }
-        $form = $this->createForm(CommandeType::class, $commande);
-        //Il faut remettre les valeurs dans l'objet commande après la deuxième soumission de formulaire
-        $tempDate = $commande->getLaDate();
-        $tempType = $commande->getTypeBillet();
-        $tempNbrBillet = $commande->getNbrBillet();
+        //CommandeStep2Type formule la partie collection de l'objet commande 
+        $form = $this->createForm(CommandeStep2Type::class, $commande);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $commande->setLaDate($tempDate);
-            $commande->setTypeBillet($tempType);
-            $commande->setNbrBillet($tempNbrBillet);
-
+            //On persist les billets remplis par l'utilisateur
             $em = $this->getDoctrine()->getManager();
             foreach ($commande->getInfoBillets() as $infoBillet) {
                 $em->persist($infoBillet);
             }
             $em->flush();
-            // return $this->redirectToRoute('ylaakel_billeterie_paiement_billet');
-            return $this->redirectToRoute('ylaakel_billeterie_contact');
 
+            return $this->redirectToRoute('ylaakel_billeterie_paiement_billet', array('numCommande' => $commande->getNumCommande()));
         }
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:informationBillet.html.twig', array('commande' => $commande, 'form' => $form->createView()));
     }
 
 
-    // public function paiementAction(Request $request, $numCommande) {
-    //     $repository = $this->getDoctrine()->getManager()->getRepository('ylaakelBilleterieBundle:Commande');
-    //     //Ici mon objet commande possède les informations sur la commande ET la collection des billets 
-    //     $commande = $repository->findOneBy(array('numCommande' => $numCommande));
-    // }
+    public function paiementAction(Request $request, Commande $commande) {
+        //api key pk_live_mEqbqgEwH5nndIdRrqC4Aodl
+        //calcul du tarif ici
+        $prixTotal = 0;
+        $tabDiff = array();
+        foreach($commande->getInfoBillets() as $infoBillet) {
+            $currentDate = date_create();
+            $dateInfoBillet = $infoBillet->getDateNaissance();
+            //Age de la personne
+            $diff = date_diff($currentDate, $dateInfoBillet)->format('%Y');
+            //Si la personne dispose du tarif réduit
+            if($infoBillet->getTarifReduit()) {
+                $prixTotal += 10;
+            }
+            else {
+                if($diff < 4) {
+                    $prixTotal += 0;    
+                }
+                elseif ($diff < 12) {
+                    $prixTotal += 8;
+                }
+                elseif ($diff < 60) {
+                    $prixTotal += 16;
+                }
+                else {
+                    $prixTotal += 8;
+                }
+            }
+            array_push($tabDiff, $diff);
+        }
+
+        return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commande, 'prixTotal' => $prixTotal, 'tabDiff' => $tabDiff));
+    }
 }
