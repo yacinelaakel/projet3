@@ -72,6 +72,13 @@ class Commande
     private $numCommande;
 
     /**
+     *
+     * @ORM\Column(name="numPaiement", type="string", length=255, nullable=true)
+     * @Assert\Length(min=3)
+     */
+    private $numPaiement;
+
+    /**
      * Get id
      *
      * @return int
@@ -242,5 +249,29 @@ class Commande
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set numPaiement
+     *
+     * @param string $numPaiement
+     *
+     * @return Commande
+     */
+    public function setNumPaiement($numPaiement)
+    {
+        $this->numPaiement = $numPaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get numPaiement
+     *
+     * @return string
+     */
+    public function getNumPaiement()
+    {
+        return $this->numPaiement;
     }
 }

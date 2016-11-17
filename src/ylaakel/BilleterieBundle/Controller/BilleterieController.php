@@ -143,6 +143,7 @@ class BilleterieController extends Controller
     }
 
     public function confirmationAction(Request $request, Commande $commande) {
+        $em = $this->getDoctrine()->getManager();
         $stripeToken = $request->get('stripeToken');
 
         //Envoi du mail final
@@ -155,6 +156,8 @@ class BilleterieController extends Controller
             $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.txt.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets())));            
             $this->get('mailer')->send($message);
 
+            $commande->setNumPaiement($stripeToken);
+            $em->flush();
             return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');
         }
     }
