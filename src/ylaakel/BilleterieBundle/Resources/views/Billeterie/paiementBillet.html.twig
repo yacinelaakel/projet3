@@ -1,34 +1,42 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} Paiement - {{ parent() }}{% endblock %}
+{% block title %} {% trans %}Paiement{% endtrans %}- {{ parent() }}{% endblock %}
 
 {% block body %}
-	<h1>Paiement de vos billets</h1>
+	<h1>{% trans %}Paiement de vos billets{% endtrans %}</h1>
 	<hr>
 	
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="well">
-				<strong>Récapitulatif de votre commande : </strong>
+				<strong>{% trans %}Récapitulatif de votre commande{% endtrans %} : </strong>
 				<hr>
 
 				<ul>
-					<li>Date de réservation choisie : le <strong>{{ commande.laDate|date('d/m/Y') }} </strong> <span class="glyphicon glyphicon-ok"></li>
-					<li>Type de billet : {% if commande.typeBillet == true %}<strong>Journée</strong> <span class="glyphicon glyphicon-ok">{% else %}<strong>Demi-journée</strong> <span class="glyphicon glyphicon-ok">{% endif %}</li>
-					<li>Nombre de billet(s) : <strong>{{ commande.nbrBillet }}</strong> <span class="glyphicon glyphicon-ok"></li>
+					<li>{% trans %}Date de réservation choisie{% endtrans %} :
+						<strong>{{ commande.laDate|date('d/m/Y') }} </strong> <span class="glyphicon glyphicon-ok">
+					</li>
+					<li>{% trans %}Type de billet{% endtrans %} : {% if commande.typeBillet == true %}
+						<strong>{% trans %}Journée{% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% else %}<strong>{% trans %}Demi-journée{% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% endif %}
+					</li>
+					<li>{% trans %}Nombre de billet(s){% endtrans %} : 
+						<strong>{{ commande.nbrBillet }}</strong> <span class="glyphicon glyphicon-ok">
+					</li>
 				</ul>
 				<hr>
 
-				<strong>Prix des billets : </strong>
+				<strong>{% trans %}Prix des billets{% endtrans %} : </strong>
 				<br>
 				<ul>
 					{% for infoBillet in allBillets %}
-						<li>Billet de "{{ infoBillet.prenom }} {{ infoBillet.nom }}" : <strong>{{ infoBillet.prix }}€</strong>
+						<li>{% trans %}Billet de{% endtrans %} "{{ infoBillet.prenom }} {{ infoBillet.nom }}" : 
+							<strong>{{ infoBillet.prix }}€</strong>
+						</li>
 					{% endfor %}
 				</ul>
 				<hr>
 
-				<strong>Prix total : {{ prixTotal }}€</strong>
+				<strong>{% trans %}Prix total{% endtrans %} : {{ prixTotal }}€</strong>
 			</div>
 		</div>
 	</div>
@@ -39,13 +47,13 @@
 		    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 		    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
 		    data-amount="{{ prixTotal * 100}}"
-		    data-name="Billeterie du Louvre"
-		    data-description="Paiement"
+		    data-name="{% trans %}Billeterie du Louvre{% endtrans %}"
+		    data-description="{% trans %}Paiement{% endtrans %}"
 		    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
 		    data-locale="auto"
 		    data-currency="EUR"
 		    data-email="{{ commande.email }}"
-		    data-label="Paiement final"
+		    data-label="{% trans %}Paiement final{% endtrans %}"
 		    data-allow-remember-me="false">
 		  </script>
 		</form>

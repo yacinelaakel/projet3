@@ -5,10 +5,10 @@
 
 {% block body %}
 	
-	<h1>Informations sur les billets</h1>
+	<h1>{% trans %}Informations sur les billets{% endtrans %}</h1>
 	<hr>
 	<div class="alert alert-info">
-		<strong>À savoir :</strong> Si vous choisissez l'option "Tarif réduit" il faudra présenter un justificatif à l'entrée du musée
+		<strong>{% trans %}À savoir{% endtrans %} :</strong> {% trans %}Si vous choisissez l'option "Tarif réduit" il faudra présenter un justificatif à l'entrée du musée{% endtrans %}
 	</div>
 
 	<form method="post">
@@ -16,7 +16,7 @@
 			{% for infoBillet in form.infoBillets %}
 				<div class="col-sm-12 col-md-4">
 	            	<div class="well">
-	            		Billet n°{{loop.index}}
+	            		{% trans %}Billet{% endtrans %} n°{{loop.index}}
 	            		<hr>
 	            		{{ form_widget(infoBillet) }}
 	            	</div>
@@ -25,7 +25,7 @@
 		</div>
 		{{ form_widget(form._token) }}
 		<div class="row">
-		    <input type="submit" value="Etape suivante" id="customSubmit" class="btn btn-success" />	
+		    <input type="submit" value="{% trans %}Etape suivante{% endtrans %}" id="customSubmit" class="btn btn-success" />	
 		</div>	
 	</form>	
 

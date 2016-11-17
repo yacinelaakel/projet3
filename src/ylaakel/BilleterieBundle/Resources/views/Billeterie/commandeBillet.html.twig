@@ -1,16 +1,16 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} Choix - {{ parent() }} {% endblock %}
+{% block title %}{% trans %}Choix{% endtrans %} - {{ parent() }} {% endblock %}
 
 {% block body %}
 
-	<h1>Choix des billets</h1>
+	<h1>{% trans %}Choix des billets{% endtrans %}</h1>
 	<hr>
 	
 	{# Si plus de 1000 ventes : #}
 	{% for message in app.session.flashbag.get('notice') %}
 		<div class="alert alert-danger">
-	    	<p>{{ message }}</p>
+	    	<p>{{ message|trans }}</p>
 	    </div>
 	{% endfor %}
 
@@ -36,7 +36,7 @@
 		
 		{{ form_widget(form._token) }}
 
-	    <input type="submit" value="Etape suivante" id="customSubmit" class="btn btn-success" />
+	    <input type="submit" value="{% trans %}Etape suivante{% endtrans %}" id="customSubmit" class="btn btn-success" />
     </form>
 
 	<script>

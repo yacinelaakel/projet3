@@ -6,15 +6,15 @@
 	<h1>{% trans %}Bienvenue sur le site de réservation de billets du Louvre !{% endtrans %}</h1>
 	<hr>
 	<div class="well">
-		<p>Vous pourrez ici immédiatement acheter vos places pour le célèbre musée du Louvre :</p>
+		<p>{% trans %}Vous pourrez ici immédiatement acheter vos places pour le célèbre musée du Louvre{% endtrans %} :</p>
 		<ul>
-			<li>Choisissez le jour de votre réservation  <span class="glyphicon glyphicon-ok"></span></li>
-			<li>Sélectionnez le nombre de billet(s) que vous voulez  <span class="glyphicon glyphicon-ok"></span></li>
-			<li>Payez de façon sécurisé en quelques clics  <span class="glyphicon glyphicon-ok"></span></li>
-			<li>Recevez directement vos billets <span class="glyphicon glyphicon-ok"></span></li>
+			<li>{% trans %}Choisissez le jour de votre réservation{% endtrans %}  <span class="glyphicon glyphicon-ok"></span></li>
+			<li>{% trans %}Sélectionnez le nombre de billet(s) que vous voulez{% endtrans %} <span class="glyphicon glyphicon-ok"></span></li>
+			<li>{% trans %}Payez de façon sécurisé en quelques clics{% endtrans %}  <span class="glyphicon glyphicon-ok"></span></li>
+			<li>{% trans %}Recevez directement vos billets{% endtrans %} <span class="glyphicon glyphicon-ok"></span></li>
 		</ul>
 	</div>
 	<a class="btn btn-warning" href="{{ path('ylaakel_billeterie_commande_billet') }}" id="btnAchatAccueil">
-		J'achète mon billet
+		{% trans %}J'achète mon billet{% endtrans %}
 	</a>
 {% endblock %}

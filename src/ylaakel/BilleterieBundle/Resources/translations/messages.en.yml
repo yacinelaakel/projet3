@@ -1,0 +1,99 @@
+# index.html.twig
+
+Billeterie du Louvre: "Ticketing of the Louvre "
+
+Bienvenue sur le site de réservation de billets du Louvre !: "Welcome to the Louvre ticket booking website!"
+
+Vous pourrez ici immédiatement acheter vos places pour le célèbre musée du Louvre: "You can immediatly buy your places for the famous Louvre museum"
+
+Choisissez le jour de votre réservation: "Choose the day of your reservation"
+
+Sélectionnez le nombre de billet(s) que vous voulez: "Select the number of ticket(s) you want"
+
+Payez de façon sécurisé en quelques clics: "Pay safely with only a few clicks"
+
+Recevez directement vos billets: "Directly receive your ticket(s)"
+
+J'achète mon billet: "I buy my ticket"
+
+# page contact
+Formulaire de contact: "Contact form"
+
+Envoyer: "Send"
+
+Votre nom: "Your name"
+
+Votre e-mail: "Your e-mail"
+
+Votre message: "Your message"
+
+Message bien envoyé.: "Message successfuly sent."
+
+# Choix billet
+Désolé il n'y a plus de place pour la date choisie.: "Sorry there is no more place for the day selected."
+
+Choix: "Choices"
+
+Date de réservation: "Reservation date"
+
+Type de billet: "Type of ticket"
+
+Journée: "Day"
+
+Demi-journée: "Half-day"
+
+Nombre de billet(s): "Number of ticket(s)"
+
+Choix des billets: "Choices of tickets"
+
+Etape suivante: "Next step"
+
+# Information billet
+
+Informations sur les billets: "Informations about ticket(s)"
+
+À savoir: "Important"
+
+Si vous choisissez l'option "Tarif réduit" il faudra présenter un justificatif à l'entrée du musée: "If you choose the option 'Half price' you will have to bring a proof at the entry of the museum"
+
+Nom: "Name"
+
+Prenom: "Surname"
+
+Pays: "Country"
+
+Date de naissance: "Date of birth"
+
+Jour: "Day"
+
+Mois: "Month"
+
+Année: "Year"
+
+Tarif réduit?: "Half price?"
+
+Date de réservation choisie: "Date of reservation chosed"
+
+Paiement de vos billets: "Payment of your tickets"
+
+Récapitulatif de votre commande: "Summary of your order"
+
+Prix des billets: "Prices of tickets"
+
+Billet de: "Ticket of"
+
+Prix total: "Total price"
+
+Paiement: "Payment"
+
+Paiement final: "Final payment"
+
+# Confirmation paiement 
+
+Confirmation de paiement: "Confirmation of your payment"
+
+Votre paiement a bien été pris en compte ! Merci de votre achat.: "Your payment is a success ! Thanks for your purchase."
+
+Vous recevrez sous peu un e-mail contenant votre facture ainsi que les billets.: "You will soon receive an e-mail containing your bill and your tickets."
+
+A bientôt au musée du Louvre !: "See you soon at the museum of the Louvre !"
