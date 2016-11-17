@@ -146,6 +146,8 @@ class BilleterieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $stripeToken = $request->get('stripeToken');
 
+        $commande->setNumPaiement($stripeToken);
+        $em->flush();
         //Envoi du mail final
         if(isset($stripeToken)) {
             $email = $commande->getEmail();
@@ -153,11 +155,10 @@ class BilleterieController extends Controller
             ->setSubject("Confirmation d'achat")
             ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
             ->setTo($email);
-            $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.txt.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets())));            
+            $image = $message->embed(\Swift_Image::fromPath('/projet3/web/images/louvre_logo.png'));
+            $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.html.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets(), 'image' => $image)));            
             $this->get('mailer')->send($message);
 
-            $commande->setNumPaiement($stripeToken);
-            $em->flush();
             return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');
         }
     }
