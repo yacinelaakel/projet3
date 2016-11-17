@@ -155,7 +155,7 @@ class BilleterieController extends Controller
             ->setSubject("Confirmation d'achat")
             ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
             ->setTo($email);
-            $image = $message->embed(\Swift_Image::fromPath('/projet3/web/images/louvre_logo.png'));
+            $image = $message->embed(\Swift_Image::fromPath('http://www.louvrebible.org/themes/louvrebible/img/logo_pyramide_accueil.png'));
             $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.html.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets(), 'image' => $image)));            
             $this->get('mailer')->send($message);
 

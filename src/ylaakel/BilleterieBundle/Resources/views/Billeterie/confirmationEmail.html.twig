@@ -1,11 +1,12 @@
-Billeterie du Louvre {{ image }}
+Billeterie du Louvre
 
 Bonjour et merci d'avoir commandé vos billets.
 
 Retrouvez ci-dessous les informations sur votre commande :
 
 - Date de réservation choisie : le {{ commande.laDate|date('d/m/Y') }}
-- Type de billet : {% if commande.typeBillet == true %}Journée {% else %}Demi-journée {% endif %}
+- Type de billet : {% if commande.typeBillet == true %}Journée {% else %}Demi-journée {% endif %} 
+
 - Nombre de billet(s) : {{ commande.nbrBillet }}
 
 ----------------------------------------------------------------------
