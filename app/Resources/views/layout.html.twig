@@ -36,7 +36,8 @@
    					<div class="collapse navbar-collapse" id="myNavbar">
     					<ul class="nav navbar-nav navbar-right">
      						<li><a href="{{ path('ylaakel_billeterie_contact') }}">Contact</a></li>
-      						<li><a href="#">EN</li></a>
+      					<li><a id="tradEn" href="{{ app.request.getBaseURL()}}/en/">EN</a></li>
+                <li><a id="tradFr" href="{{ app.request.getBaseURL()}}/fr/">FR</a></li>
     					</ul>
     				</div>
 				</div>
@@ -56,6 +57,6 @@
 			{% endblock %}
 	  </div>
 	</div>
-
+  
 </body>
 </html>
