@@ -8,6 +8,7 @@
 	<h1>{% trans %}Informations sur les billets{% endtrans %}</h1>
 	<hr>
 	<div class="alert alert-info">
+		Date : {{ commande.laDate|date('l') }}
 		<strong>{% trans %}À savoir{% endtrans %} :</strong> {% trans %}Si vous choisissez l'option "Tarif réduit" il faudra présenter un justificatif à l'entrée du musée{% endtrans %}
 	</div>
 

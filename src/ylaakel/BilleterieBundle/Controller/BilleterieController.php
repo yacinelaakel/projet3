@@ -106,7 +106,7 @@ class BilleterieController extends Controller
     public function paiementAction(Request $request, Commande $commande) {
         $em = $this->getDoctrine()->getManager();
 
-        $tarif = $this->container->get('ylaakel_billeterie.tarif');
+        $tarif = $this->get('ylaakel_billeterie.tarif');
         //calcul du tarif ici
         $commandeEtPrix = $tarif->calculTarif($commande);
 

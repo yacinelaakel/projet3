@@ -4,6 +4,7 @@ namespace ylaakel\BilleterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -273,5 +274,31 @@ class Commande
     public function getNumPaiement()
     {
         return $this->numPaiement;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function isDateValid(ExecutionContextInterface $context)
+    {
+        $laDate = $this->getLaDate();
+        $currentDate = date_create();
+        $diff = date_diff($currentDate, $laDate)->format('%d');
+
+        if ($diff < 0) {
+            $context
+                ->buildViolation('Invalide : jour interdit.')
+                ->atPath('laDate')
+                ->addViolation()
+            ;
+        }
+        $dayLaDate = $laDate->format('l');
+        if ($dayLaDate == 'Tuesday' || $dayLaDate == 'Sunday') {
+            $context
+                ->buildViolation('Invalide : jour interdit.')
+                ->atPath('laDate')
+                ->addViolation()
+            ;
+        }
     }
 }
