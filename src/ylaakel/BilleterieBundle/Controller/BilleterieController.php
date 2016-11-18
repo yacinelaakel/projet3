@@ -10,6 +10,7 @@ use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeStep1Type;
 use ylaakel\BilleterieBundle\Form\CommandeStep2Type;
 use ylaakel\BilleterieBundle\Entity\InfoBillet;
+use ylaakel\BilleterieBundle\Tarif\Tarif;
 
 
 class BilleterieController extends Controller
@@ -103,43 +104,15 @@ class BilleterieController extends Controller
 
 
     public function paiementAction(Request $request, Commande $commande) {
-        //api key pk_live_mEqbqgEwH5nndIdRrqC4Aodl
         $em = $this->getDoctrine()->getManager();
-        //calcul du tarif ici
-        $prixTotal = 0;
-        $tabPrix = array();
-        foreach($commande->getInfoBillets() as $infoBillet) {
-            $currentDate = date_create();
-            $dateInfoBillet = $infoBillet->getDateNaissance();
-            //Age de la personne
-            $diff = date_diff($currentDate, $dateInfoBillet)->format('%Y');
-            //Si la personne dispose du tarif réduit
-            if($infoBillet->getTarifReduit()) {
-                $prixTotal += 10;
-                $infoBillet->setPrix(10);
-            }
-            else {
-                if($diff < 4) {
-                    $prixTotal += 0;  
-                    $infoBillet->setPrix(0);  
-                }
-                elseif ($diff < 12) {
-                    $prixTotal += 8;
-                    $infoBillet->setPrix(8);  
-                }
-                elseif ($diff < 60) {
-                    $prixTotal += 16;
-                    $infoBillet->setPrix(16);  
-                }
-                else {
-                    $prixTotal += 12;
-                    $infoBillet->setPrix(12);  
-                }
-            }
-            $em->flush();
-        }
 
-        return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commande, 'prixTotal' => $prixTotal, 'allBillets' => $commande->getInfoBillets()));
+        $tarif = $this->container->get('ylaakel_billeterie.tarif');
+        //calcul du tarif ici
+        $commandeEtPrix = $tarif->calculTarif($commande);
+
+        $em->flush();
+
+        return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commandeEtPrix['commande'], 'allBillets' => $commande->getInfoBillets(), 'prixTotal' => $commandeEtPrix['prixTotal']));
     }
 
     public function confirmationAction(Request $request, Commande $commande) {
