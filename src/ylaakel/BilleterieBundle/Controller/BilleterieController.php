@@ -59,7 +59,7 @@ class BilleterieController extends Controller
                 $allBillets += count($uneCommande->getInfoBillets());
             }
             //il y a + de 1000 billets vendus déjà, ou alors la personne souhaite commander + de 1000 billets
-            if($allBillets > 10 || $commande->getNbrBillet() > 10) {
+            if($allBillets > 1000 || $commande->getNbrBillet() > 1000) {
                 $request->getSession()->getFlashBag()->add('notice', "Désolé il n'y a plus de place pour la date choisie.");
                 return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
             }
