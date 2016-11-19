@@ -1,5 +1,4 @@
 /*Général*/
-
 body {
 	font-family: 'Open Sans', 'Verdana', 'Arial', sans-serif;
 	font-size: 20px !important;
@@ -50,7 +49,7 @@ a {
 .container {
 	background-color: white;
 	color: black !important;
-	min-height: 760px;
+	min-height: 770px;
 }
 
 h1 {
@@ -93,8 +92,9 @@ footer {
    position:static;
    left:0px;
    bottom:0px;
-   height:30px;
+   height:40px;
    width:100%;
+   padding-top: 5px;
    background:#565656;
    color: #eaeaea;
 }
