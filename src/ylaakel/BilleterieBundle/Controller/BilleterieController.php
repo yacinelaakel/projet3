@@ -10,8 +10,6 @@ use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeStep1Type;
 use ylaakel\BilleterieBundle\Form\CommandeStep2Type;
 use ylaakel\BilleterieBundle\Entity\InfoBillet;
-use ylaakel\BilleterieBundle\Tarif\Tarif;
-
 
 class BilleterieController extends Controller
 {
