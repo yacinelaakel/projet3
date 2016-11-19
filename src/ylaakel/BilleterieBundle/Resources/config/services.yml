@@ -2,3 +2,4 @@ services:
     ylaakel_billeterie.tarif:
         class: ylaakel\BilleterieBundle\Tarif\Tarif
         arguments:
+        
