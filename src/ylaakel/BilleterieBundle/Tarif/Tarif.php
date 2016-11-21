@@ -12,8 +12,8 @@ class Tarif
             $dateInfoBillet = $infoBillet->getDateNaissance();
             //Age de la personne
             $diff = date_diff($currentDate, $dateInfoBillet)->format('%Y');
-            //Si la personne dispose du tarif réduit
-            if($infoBillet->getTarifReduit()) {
+            //Si la personne dispose du tarif réduit et qu'elle a + de 4 ans
+            if($infoBillet->getTarifReduit() && $diff >= 4) {
                 $prixTotal += 10;
                 $infoBillet->setPrix(10);
             }
@@ -35,6 +35,10 @@ class Tarif
                     $infoBillet->setPrix(12);  
                 }
             }
+        }
+        //Tarif divisé par deux pour les demi-journées
+        if(!$commande->getTypeBillet()) {
+            $prixTotal = intval($prixTotal/2);
         }
         return array('commande' => $commande, 'prixTotal' => $prixTotal);
 	}
