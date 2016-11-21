@@ -301,5 +301,25 @@ class Commande
             ;
         }
     }
+
+    /**
+     * @Assert\Callback
+     */
+    public function isTypeBilletValid(ExecutionContextInterface $context)
+    {
+        $laDate = $this->getLaDate();
+        $currentDate = date_create();
+        $diff = date_diff($currentDate, $laDate)->format('%d');
+
+        if ($diff == 0) {
+            if($this->getTypeBillet()) {
+                $context
+                    ->buildViolation('Invalide : Après 14h seul le type "Demi-journée" est disponible.')
+                    ->atPath('typeBillet')
+                    ->addViolation()
+                ;
+            }
+        }
+    }
 }
 
