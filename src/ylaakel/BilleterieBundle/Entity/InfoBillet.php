@@ -251,22 +251,4 @@ class InfoBillet
     {
         return $this->prix;
     }
-
-    /**
-     * @Assert\Callback
-     */
-    public function isTypeBilletValid(ExecutionContextInterface $context)
-    {
-        $laDate = $this->getLaDate();
-        $currentDate = date_create();
-        $diff = date_diff($currentDate, $laDate)->format('%d');
-
-        if ($diff < 0) {
-            $context
-                ->buildViolation('Invalide : jour interdit.')
-                ->atPath('laDate')
-                ->addViolation()
-            ;
-        }
-    }
 }

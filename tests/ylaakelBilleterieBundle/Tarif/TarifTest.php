@@ -21,15 +21,14 @@ class TarifTest extends WebTestCase {
 		$unBilletTest->setDateNaissance(new \DateTime('28-06-1995'));
 		$commandeTest->addInfoBillet($unBilletTest);
 		$tarif = $client->getContainer()->get('ylaakel_billeterie.tarif');
-        $commandeEtPrix = $tarif->calculTarif($commandeTest);
 
         $unAutreBilletTest = new InfoBillet();
-        //âge = 2 donc prix = 0 même si tarif réduit sélectionné
-        $unAutreBilletTest->setDateNaissance(new \DateTime('28-06-2014'));
+        $unAutreBilletTest->setDateNaissance(new \DateTime('28-06-1995'));
         $unAutreBilletTest->setTarifReduit(true);
         $commandeTest->addInfoBillet($unAutreBilletTest);
 
-        $this->assertEquals(16, $commandeEtPrix['prixTotal']);
+        $commandeEtPrix = $tarif->calculTarif($commandeTest);
+        $this->assertEquals(26, $commandeEtPrix['prixTotal']);
 
 
 	}
