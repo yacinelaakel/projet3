@@ -17,7 +17,7 @@
 						<strong>{{ commande.laDate|date('d/m/Y') }} </strong> <span class="glyphicon glyphicon-ok">
 					</li>
 					<li>{% trans %}Type de billet{% endtrans %} : {% if commande.typeBillet == true %}
-						<strong>{% trans %}Journée{% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% else %}<strong>{% trans %}Demi-journée{% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% endif %}
+						<strong>{% trans %}Journée{% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% else %}<strong>{% trans %}Demi-journée (moitié prix){% endtrans %}</strong> <span class="glyphicon glyphicon-ok">{% endif %}
 					</li>
 					<li>{% trans %}Nombre de billet(s){% endtrans %} : 
 						<strong>{{ commande.nbrBillet }}</strong> <span class="glyphicon glyphicon-ok">

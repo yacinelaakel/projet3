@@ -1,10 +1,10 @@
 ylaakel_billeterie_homepage:
     path:     /
-    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:index }
+    defaults: { _controller: ylaakelBilleterieBundle:App:index }
 
 ylaakel_billeterie_contact: 
     path: /contact
-    defaults: { _controller: ylaakelBilleterieBundle:Billeterie:contact }
+    defaults: { _controller: ylaakelBilleterieBundle:Contact:contact }
 
 ylaakel_billeterie_commande_billet:
     path: /commande-billet

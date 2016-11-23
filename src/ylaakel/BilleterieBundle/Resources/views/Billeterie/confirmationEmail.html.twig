@@ -17,8 +17,6 @@ Billet n°{{loop.index}} : "{{ infoBillet.prenom }} {{ infoBillet.nom }}" : {{ i
 {% set prixTotal = prixTotal + infoBillet.prix %}
 {% endfor %}
 
-Prix total : {{ prixTotal }}€
+Prix total : {% if commande.typeBillet == true %}{{ prixTotal }}{% else %}{{ prixTotal/2|number_format }}{% endif %} €
 
 Numéro de commande : {{ commande.numCommande }}
-Numéro de réservation :  {{ stripeToken }}
-

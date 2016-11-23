@@ -5,6 +5,7 @@ namespace ylaakel\BilleterieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use ylaakel\BilleterieBundle\Entity\InfoBillet;
 
 
 /**
@@ -311,15 +312,30 @@ class Commande
         $currentDate = date_create();
         $diff = date_diff($currentDate, $laDate)->format('%d');
 
+        //Si diff = 0 ça veut dire qu'il y a 0 jour de différence entre la date choisie et la date courante
         if ($diff == 0) {
-            if($this->getTypeBillet()) {
-                $context
-                    ->buildViolation('Invalide : Après 14h seul le type "Demi-journée" est disponible.')
-                    ->atPath('typeBillet')
-                    ->addViolation()
-                ;
+            //On s'assure que ce soit vraiment le jour J en comparant le nom des jours (monday, tuesday...)
+            if($laDate->format('l') == $currentDate->format('l')) {
+                //Si l'utilisateur choisit un billet journée 
+                if($this->getTypeBillet()) {
+                    $context
+                        ->buildViolation("Aujourd'hui passé 14h billet 'Journée' interdit.")
+                        ->atPath('typeBillet')
+                        ->addViolation()
+                    ;
+                }
             }
         }
+    }
+
+    //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de billets
+    public function initBillets($nbrBillet, Commande $commande) { 
+        for ($i=1; $i <= $nbrBillet; $i++) { 
+            $infoBillet[$i] = new InfoBillet();
+            //On ajoute chaque billet à la collection de la commande en cours
+            $commande->addInfoBillet($infoBillet[$i]);
+        }
+        return $commande;
     }
 }
 

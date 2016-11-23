@@ -15,7 +15,8 @@ class BilleterieControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/fr/');
 
-        $this->assertEquals(1, $crawler->filter('h1:contains("Bienvenue sur le site de réservation de billets du Louvre !")')->count());
+        $this->assertEquals(1, $crawler->filter('h1:contains("Bienvenue sur le site de réservation de billets du Louvre !")')
+            ->count());
         
 		$link = $crawler->filter('a:contains("achète mon billet")')->first()->link();
 		$crawler = $client->click($link);

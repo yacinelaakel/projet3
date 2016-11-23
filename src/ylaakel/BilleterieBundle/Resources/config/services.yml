@@ -2,4 +2,7 @@ services:
     ylaakel_billeterie.tarif:
         class: ylaakel\BilleterieBundle\Tarif\Tarif
         arguments:
-        
+
+    ylaakel_billeterie.restriction.billet:
+        class: ylaakel\BilleterieBundle\RestrictionBillet\RestrictionBillet
+        arguments: [ '@doctrine.orm.entity_manager' ]
