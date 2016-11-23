@@ -4,12 +4,9 @@ namespace ylaakel\BilleterieBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use ylaakel\BilleterieBundle\Form\ContactType;
-use ylaakel\BilleterieBundle\Entity\Contact;
 use ylaakel\BilleterieBundle\Entity\Commande;
 use ylaakel\BilleterieBundle\Form\CommandeStep1Type;
 use ylaakel\BilleterieBundle\Form\CommandeStep2Type;
-use ylaakel\BilleterieBundle\Entity\InfoBillet;
 
 class BilleterieController extends Controller
 {

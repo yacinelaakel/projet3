@@ -33,7 +33,7 @@ class InfoBillet
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @Assert\Length(min=3, minMessage="Le nom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le nom doit faire moins de {{ limit }} caractères.")
+     * @Assert\Regex("/^[a-zA-Z]{3,15}/", message="Le nom doit faire entre 3 et 15 lettres.")
      */
     private $nom;
 
@@ -41,7 +41,7 @@ class InfoBillet
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\Length(min=3, minMessage="Le prénom doit faire au moins {{ limit }} caractères.", max=15, maxMessage="Le prénom doit faire moins de {{ limit }} caractères.")
+     * @Assert\Regex("/^[a-zA-Z]{3,15}/", message="Le prénom doit faire entre 3 et 15 lettres.")
      */
     private $prenom;
 
