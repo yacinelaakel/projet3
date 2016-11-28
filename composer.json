@@ -25,7 +25,8 @@
         "symfony/assetic-bundle": "^2.7.1",
         "leafo/scssphp": "~0.6",
         "patchwork/jsqueeze": "~1.0",
-        "coresphere/console-bundle": "~0.4"
+        "coresphere/console-bundle": "~0.4",
+        "stripe/stripe-php": "^4.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -67,4 +68,3 @@
         }
     }
 }
-

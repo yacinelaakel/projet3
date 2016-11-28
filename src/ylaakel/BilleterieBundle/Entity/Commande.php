@@ -88,6 +88,13 @@ class Commande
     private $paye;
 
     /**
+     *
+     * @ORM\Column(name="prixTotal", type="integer", nullable=true)
+     * @Assert\Range(min=0)
+     */
+    private $prixTotal;
+
+    /**
      * Get id
      *
      * @return int
@@ -372,5 +379,29 @@ class Commande
     public function getPaye()
     {
         return $this->paye;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param integer $prixTotal
+     *
+     * @return Commande
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return integer
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
     }
 }

@@ -60,31 +60,40 @@ class BilleterieController extends Controller
         $tarif = $this->get('ylaakel_billeterie.tarif');
         //calcul du tarif ici
         $commandeEtPrix = $tarif->calculTarif($commande);
-
+        $commande->setPrixTotal($commandeEtPrix['prixTotal']);
         $em->flush();
 
         return $this->render('ylaakelBilleterieBundle:Billeterie:paiementBillet.html.twig', array('commande' => $commandeEtPrix['commande'], 'allBillets' => $commande->getInfoBillets(), 'prixTotal' => $commandeEtPrix['prixTotal']));
     }
 
     public function confirmationAction(Request $request, Commande $commande) {
-        $em = $this->getDoctrine()->getManager();
-        $stripeToken = $request->get('stripeToken');
-        $commande->setPaye(true);
-        $commande->setNumPaiement($stripeToken);
-        $em->flush();
-        //Envoi du mail final
-        if(isset($stripeToken)) {
-            //La commande est maintenant payé
-            $email = $commande->getEmail();
-            $message = \Swift_Message::newInstance()
-            ->setSubject("Confirmation d'achat")
-            ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
-            ->setTo($email);
-            $image = $message->embed(\Swift_Image::fromPath('http://www.louvrebible.org/themes/louvrebible/img/logo_pyramide_accueil.png'));
-            $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.html.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets(), 'image' => $image)));            
-            $this->get('mailer')->send($message);
+        $em = $this->getDoctrine()->getManager();        
 
-            return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');
-        }
+            $stripeToken = $request->get('stripeToken');
+            if(isset($stripeToken)) {
+                //La commande est maintenant payé
+                $commande->setPaye(true);
+                $commande->setNumPaiement($stripeToken);
+                $em->flush();
+                \Stripe\Stripe::setApiKey("sk_test_AWzk8aYj4C1Gn4sel13wHVYF");
+                \Stripe\Charge::create(array(
+                    "amount" => $commande->getPrixTotal()*100, 
+                    "currency" => "eur",
+                    "source" => $stripeToken,
+                    "description" => "Charge OK"
+                    ));
+
+                $email = $commande->getEmail();
+                $message = \Swift_Message::newInstance()
+                ->setSubject("Confirmation d'achat")
+                ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
+                ->setTo($email);
+                $image = $message->embed(\Swift_Image::fromPath('http://www.louvrebible.org/themes/louvrebible/img/logo_pyramide_accueil.png'));
+                $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.html.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets(), 'image' => $image)));            
+                $this->get('mailer')->send($message);
+
+                return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');
+            }
     }
+
 }
