@@ -14,6 +14,7 @@ class CommandeRepository extends \Doctrine\ORM\EntityRepository
 	public function commandesDate($date) {
 		$qb = $this->createQueryBuilder('c')
 				   ->where('c.laDate = :date')
+				   ->andWhere('c.paye = true')
     			   ->setParameter('date', $date);
 
 		$query = $qb->getQuery();

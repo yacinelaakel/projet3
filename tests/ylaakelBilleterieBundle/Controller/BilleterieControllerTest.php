@@ -54,7 +54,7 @@ class BilleterieControllerTest extends WebTestCase
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $commandeTest = $em->getRepository('ylaakelBilleterieBundle:Commande')->find(322);
+        $commandeTest = $em->getRepository('ylaakelBilleterieBundle:Commande')->find(333);
 
         $crawler = $client->request('GET', '/fr/information-billet-' . $commandeTest->getNumCommande());
 

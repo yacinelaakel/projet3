@@ -25,7 +25,6 @@ class BilleterieController extends Controller
                 return $this->render('ylaakelBilleterieBundle:Billeterie:commandeBillet.html.twig', array('form' => $form->createView()));
             }
             //génère un code
-            $commande->setNumCommande(rand(1,10000) . 'aze' . rand(1, 10000) . 'rty');
             $em->persist($commande);
             $em->flush();
 
@@ -36,7 +35,7 @@ class BilleterieController extends Controller
     }
 
     public function infoAction(Request $request, Commande $commande) {
-        $commande = $commande->initBillets($commande->getNbrBillet(), $commande);
+        $commande = $commande->initBillets();
         //CommandeStep2Type formule la partie collection de l'objet commande 
         $form = $this->createForm(CommandeStep2Type::class, $commande);
 
@@ -70,11 +69,12 @@ class BilleterieController extends Controller
     public function confirmationAction(Request $request, Commande $commande) {
         $em = $this->getDoctrine()->getManager();
         $stripeToken = $request->get('stripeToken');
-
+        $commande->setPaye(true);
         $commande->setNumPaiement($stripeToken);
         $em->flush();
         //Envoi du mail final
         if(isset($stripeToken)) {
+            //La commande est maintenant payé
             $email = $commande->getEmail();
             $message = \Swift_Message::newInstance()
             ->setSubject("Confirmation d'achat")

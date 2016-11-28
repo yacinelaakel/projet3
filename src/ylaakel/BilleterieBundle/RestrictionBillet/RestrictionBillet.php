@@ -13,12 +13,13 @@ class RestrictionBillet
     }
 
 	public function nbrBilletIsTooMuch(Commande $commande) {
-        //On récupère toutes les commandes à la date choisie par l'utilisateur
+        //On récupère toutes les commandes à la date choisie par l'utilisateur et qui sont payés
         $commandesDate = $this->em->getRepository('ylaakelBilleterieBundle:Commande')->commandesDate($commande->getLaDate());
         $allBillets = 0;
         //On compte le nombre de billets vendu à cette date
+        // à revoir
         foreach ($commandesDate as $uneCommande) {
-            $allBillets += count($uneCommande->getInfoBillets());
+            $allBillets += $uneCommande->getNbrBillet();
         }
         //il y a + de 1000 billets vendus déjà, ou alors la personne souhaite commander + de 1000 billets
         if($allBillets > 1000 || $commande->getNbrBillet() > 1000) {

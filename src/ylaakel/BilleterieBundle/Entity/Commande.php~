@@ -4,6 +4,8 @@ namespace ylaakel\BilleterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use ylaakel\BilleterieBundle\Entity\InfoBillet;
 
 
 /**
@@ -77,6 +79,13 @@ class Commande
      * @Assert\Length(min=3)
      */
     private $numPaiement;
+
+    /**
+     *
+     * @ORM\Column(name="paye", type="boolean")
+     * @Assert\Type("bool")
+     */
+    private $paye;
 
     /**
      * Get id
@@ -189,6 +198,7 @@ class Commande
     public function __construct()
     {
         $this->infoBillets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setNumCommande(rand(1,10000) . 'aze' . rand(1, 10000) . 'rty');
     }
 
     /**
@@ -250,4 +260,91 @@ class Commande
     {
         return $this->email;
     }
+
+    /**
+     * Set numPaiement
+     *
+     * @param string $numPaiement
+     *
+     * @return Commande
+     */
+    public function setNumPaiement($numPaiement)
+    {
+        $this->numPaiement = $numPaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get numPaiement
+     *
+     * @return string
+     */
+    public function getNumPaiement()
+    {
+        return $this->numPaiement;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function isDateValid(ExecutionContextInterface $context)
+    {
+        $laDate = $this->getLaDate();
+        $currentDate = date_create();
+        $diff = date_diff($currentDate, $laDate)->format('%d');
+
+        if ($diff < 0) {
+            $context
+                ->buildViolation('Invalide : jour interdit.')
+                ->atPath('laDate')
+                ->addViolation()
+            ;
+        }
+        $dayLaDate = $laDate->format('l');
+        if ($dayLaDate == 'Tuesday' || $dayLaDate == 'Sunday') {
+            $context
+                ->buildViolation('Invalide : jour interdit.')
+                ->atPath('laDate')
+                ->addViolation()
+            ;
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function isTypeBilletValid(ExecutionContextInterface $context)
+    {
+        $laDate = $this->getLaDate();
+        $currentDate = date_create();
+        $diff = date_diff($currentDate, $laDate)->format('%d');
+
+        //Si diff = 0 ça veut dire qu'il y a 0 jour de différence entre la date choisie et la date courante
+        if ($diff == 0) {
+            //On s'assure que ce soit vraiment le jour J en comparant le nom des jours (monday, tuesday...)
+            if($laDate->format('l') == $currentDate->format('l')) {
+                //Si l'utilisateur choisit un billet journée 
+                if($this->getTypeBillet()) {
+                    $context
+                        ->buildViolation("Aujourd'hui passé 14h billet 'Journée' interdit.")
+                        ->atPath('typeBillet')
+                        ->addViolation()
+                    ;
+                }
+            }
+        }
+    }
+
+    //On récupère le nombre de billet(s) que l'utilisateur a décidé de commander et on crée autant de billets
+    public function initBillets() { 
+        $nbrBillet = $this->getNbrBillet();
+        for ($i=1; $i <= $nbrBillet; $i++) { 
+            $infoBillet[$i] = new InfoBillet();
+            //On ajoute chaque billet à la collection de la commande en cours
+            $this->addInfoBillet($infoBillet[$i]);
+        }
+        return $this;
+    }
 }
+
