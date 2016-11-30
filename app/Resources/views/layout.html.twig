@@ -18,32 +18,31 @@
 </head>
 
 <body>
-	<header class="container-fluid">
-		<div class="row">
-			<nav id="nav1" class="navbar navbar-default" style="border-bottom:none">
-  				<div class="container-fluid">
-    				<div class="navbar-header">
-    					<a class="navbar-brand" href="{{ path('ylaakel_billeterie_homepage') }}">
-    					 	<img src=" {{ asset('images/louvre_logo.png') }} " alt="Logo louvre" id="logo">
-    					 	<span id="titre-logo">Billeterie du Louvre</span>
-    					</a>
-   						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-   						</button>
-   					</div>
-   					<div class="collapse navbar-collapse" id="myNavbar">
-    					<ul class="nav navbar-nav navbar-right">
-     						<li><a href="{{ path('ylaakel_billeterie_contact') }}">Contact</a></li>
-      					<li><a id="tradEn" href="{{ app.request.getBaseURL()}}/en/">EN</a></li>
-                <li><a id="tradFr" href="{{ app.request.getBaseURL()}}/fr/">FR</a></li>
-    					</ul>
-    				</div>
-				</div>
-			</nav>
-		</div>
-	</header>
+    <div class="container-fluid">
+  		<div class="row">
+  			<nav id="nav1" class="navbar navbar-default" style="border-bottom:none">
+      				<div class="navbar-header">
+      					<a class="navbar-brand" href="{{ path('ylaakel_billeterie_homepage') }}">
+      					 	<img src=" {{ asset('images/louvre_logo.png') }} " alt="Logo louvre" id="logo">
+      					 	<span id="titre-logo">Billeterie du Louvre</span>
+      					</a>
+     						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+  					        <span class="icon-bar"></span>
+  					        <span class="icon-bar"></span>
+  					        <span class="icon-bar"></span>
+     						</button>
+     					</div>
+     					<div class="collapse navbar-collapse" id="myNavbar">
+      					<ul class="nav navbar-nav navbar-right">
+       						<li><a href="{{ path('ylaakel_billeterie_contact') }}">Contact</a></li>
+        					<li><a id="tradEn" href="{{ app.request.getBaseURL()}}/en/">EN</a></li>
+                  <li><a id="tradFr" href="{{ app.request.getBaseURL()}}/fr/">FR</a></li>
+      					</ul>
+  				</div>
+  			</nav>
+  		</div>
+    </div>
+
 
   {% block javascripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -51,12 +50,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   {% endblock %}
 
-	<div class="row" id="row2">
 		<div class="container">
 			{% block body %}
 			{% endblock %}
 	  </div>
-	</div>
   
   <footer>
       <span>Mentions légales</span>
