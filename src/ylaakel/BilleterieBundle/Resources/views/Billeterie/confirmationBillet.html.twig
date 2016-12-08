@@ -5,6 +5,13 @@
 {% block body %}
 	<h1>{% trans %}Confirmation de paiement{% endtrans %}</h1>
 	<hr>
+
+	{% for message in app.session.flashbag.get('notice') %}
+		<div class="alert alert-danger">
+	    	<p>{{ message|trans }}</p>
+	    </div>
+	{% endfor %}
+	
 	<div class="alert alert-success"> 
 		<p>{% trans %}Votre paiement a bien été pris en compte ! Merci de votre achat.{% endtrans %}<br>
 		{% trans %}Vous recevrez sous peu un e-mail contenant votre facture ainsi que les billets.{% endtrans %}

@@ -68,25 +68,29 @@ class BilleterieController extends Controller
 
     public function confirmationAction(Request $request, Commande $commande) {
         $em = $this->getDoctrine()->getManager();        
-
             $stripeToken = $request->get('stripeToken');
             if(isset($stripeToken)) {
                 //La commande est maintenant payé
                 $commande->setPaye(true);
                 $commande->setNumPaiement($stripeToken);
                 $em->flush();
-                \Stripe\Stripe::setApiKey("sk_test_AWzk8aYj4C1Gn4sel13wHVYF");
-                \Stripe\Charge::create(array(
-                    "amount" => $commande->getPrixTotal()*100, 
-                    "currency" => "eur",
-                    "source" => $stripeToken,
-                    "description" => "Charge OK"
-                    ));
+                \Stripe\Stripe::setApiKey($this->getParameter('stripe_key'));
+                try {
+                    \Stripe\Charge::create(array(
+                        "amount" => $commande->getPrixTotal()*100, 
+                        "currency" => "eur",
+                        "source" => $stripeToken,
+                        "description" => "Charge OK"
+                        ));
+                } catch(\Stripe\Error\Card $e) {
+                    $request->getSession()->getFlashBag()->add('notice', "Le paiement a échoué");
+                    return $this->render('ylaakelBilleterieBundle:Billeterie:confirmationBillet.html.twig');                    
+                }
 
                 $email = $commande->getEmail();
                 $message = \Swift_Message::newInstance()
                 ->setSubject("Confirmation d'achat")
-                ->setFrom(array('green.tare@gmail.com' => 'Le Louvre'))
+                ->setFrom(array($this->getParameter('mailer_user') => 'Le Louvre'))
                 ->setTo($email);
                 $image = $message->embed(\Swift_Image::fromPath('http://www.louvrebible.org/themes/louvrebible/img/logo_pyramide_accueil.png'));
                 $message->setBody($this->renderView('ylaakelBilleterieBundle:Billeterie:confirmationEmail.html.twig', array('commande' => $commande, 'stripeToken' => $stripeToken, 'allBillets' => $commande->getInfoBillets(), 'image' => $image)));            
