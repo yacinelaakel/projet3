@@ -23,7 +23,7 @@ class ContactController extends Controller {
     		$message = \Swift_Message::newInstance()
             ->setSubject('Formulaire de contact')
             ->setFrom(array($email => $name))
-            ->setTo('yacine.laakel@hotmail.fr')
+            ->setTo($this->getParameter('mailer_to')) //mailer_to
             ->setBody($this->renderView('ylaakelBilleterieBundle:Contact:contactEmail.txt.twig', array('contact' => $contact)));
         	$this->get('mailer')->send($message);
 

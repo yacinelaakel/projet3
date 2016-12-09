@@ -91,7 +91,7 @@
 					$(':radio[value="0"]').prop('checked', false);
       				var currentDay = new Date();
       				//Si le jour sélectionné (dateText) est égal au jour courant
-      				if(currentDay.getDate() + "-" + (currentDay.getMonth() +1) + "-" + currentDay.getFullYear() == dateText) {
+      				if(("0" + currentDay.getDate()).slice(-2) + "-" + (currentDay.getMonth() +1) + "-" + currentDay.getFullYear() == dateText) {
       					//Si 14h est passé
       					if(currentDay.getHours() >= 14 && (currentDay.getMinutes() > 0 || currentDay.getSeconds() > 0)) {
       						//Bouton radio journée désactivé
